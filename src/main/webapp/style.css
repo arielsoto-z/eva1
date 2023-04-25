@@ -1,0 +1,13 @@
+.head{
+    background-color: rgb(3, 158, 41);
+}
+
+h1{
+    color: rgb(255, 255, 255);
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+    display: grid;
+}
