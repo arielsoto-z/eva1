@@ -30,15 +30,92 @@ public class NewServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            String name = request.getParameter("name");
-            String pass = request.getParameter("pass");
-            out.println(name+"<p>");
-            out.println(pass+"<p>");
-            int admin = Integer.parseInt(request.getParameter("admin"));
-            if(admin == 0){
-                out.println("<a href=\"home_administrador.jsp\"></a>");
-            }else{
-                out.println("<a href=\"home_administrativo.jsp\"></a>");
+            String nombre = request.getParameter("nombre");
+            String apellidoP = request.getParameter("apellidoP");
+            String apellidoM = request.getParameter("apellidoM");
+            String rut = request.getParameter("rut");
+            String dv = request.getParameter("dv");
+            String acom = request.getParameter("acom");
+            String cantDias = request.getParameter("cantDias");
+            String menores = request.getParameter("menores");
+            String cantMenores = request.getParameter("cantMenores");
+            
+            int contador = 0;
+            
+            if(nombre == "")
+                out.print("Nombre no ingresado <p>");
+            else{
+                out.print(nombre + "<p>");
+                contador++;
+            }
+            
+            if(apellidoP == "")
+                out.print("Apellido paterno no ingresado <p>");
+            else{
+                out.print(apellidoP + "<p>");
+                contador++;
+            }
+            
+            if(apellidoM == "")
+                out.print("Apellido materno no ingresado <p>");
+            else{
+                out.print(apellidoM + "<p>");
+                contador++;
+            }
+            
+            if(rut == "")
+                out.print("rut no ingresado <p>");
+            else{
+                out.print(rut + "<p>");
+                contador++;
+            }
+            
+            if(acom == "")
+                out.print("Cantidad de acompañantes no ingresado <p>");
+            else if(Integer.parseInt(acom) < 0){
+                out.print("Cantidad de acompañantes menor a 0");
+            }
+            else{
+                out.print(acom + "<p>");
+                contador++;
+            }
+            
+            if(cantDias == "")
+                out.print("Cantidad de días no ingresado <p>");
+            else if(Integer.parseInt(cantDias) < 1){
+                out.print("Cantidad de dias menor a 1");
+            }
+            else{
+                out.print(cantDias + "<p>");
+                contador++;
+            }
+
+            if(menores == "1")
+                if(cantMenores == "")
+                    out.print("Cantidad de menores de edad acompañantes no ingresado <p>");
+                else if(Integer.parseInt(cantMenores) < 0){
+                    out.print("Cantidad de menores menor a 0");
+                }
+                else if(Integer.parseInt(cantMenores) > Integer.parseInt(acom)){
+                    out.print("Cantidad de menores mayor a acompañantes");
+                }
+                else{
+                    out.print(cantMenores + "<p>");
+                    contador++;
+                }
+            else
+                contador++;
+          
+            if (contador == 7){
+                int mayores = Integer.parseInt(acom) - Integer.parseInt(cantMenores);
+                int total = ((Integer.parseInt(cantMenores) * 8000) + ((mayores+1) * 10000))*Integer.parseInt(cantDias);
+                out.print("Total a Pagar = " + total);
+            }
+            else{
+                out.print("El Formulario no esta completo, intentelo de nuevo <p>");
+                out.print("<form action=\"index.jsp\">\n" +
+                          "    <input type=\"submit\" value=\"Go to Google\" />\n" +
+                          "</form>");
             }
         }
     }
